@@ -2,9 +2,12 @@
 package main
 
 import "fmt"
+import "golang.org/x/exp/constraints"
 
 // Part 1: print function refactoring
-
+type acceptable interface{
+	int | string | bool
+}
 // non-generic print functions
 
 func printString(s string) { fmt.Println(s) }
@@ -13,7 +16,23 @@ func printInt(i int) { fmt.Println(i) }
 
 func printBool(b bool) { fmt.Println(b) }
 
+func printAny[T acceptable] (a T) {
+	fmt.Println(a)
+}
+
 // Part 2 sum function refactoring
+type numeric interface{
+	constraints.Integer | constraints.Float
+}
+
+func sumAny[T numeric] (numbers ...T) T{
+ 
+	var result T
+	for _, n := range numbers{
+		result += n
+	}
+	return result
+}
 
 // sum sums a slice of any type
 func sum(numbers []interface{}) interface{} {
@@ -38,9 +57,13 @@ func main() {
 	printBool(true)
 
 	// call generic printAny function for each value above
+	printAny("hello")
+	printAny(42)
+	printAny(true)
 
 	// call sum function
 	fmt.Println("result", sum([]interface{}{1, 2, 3}))
+	fmt.Println(sumAny(1, 2, 3))
 
 	// call generics sumAny function
 }

@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 	"unicode"
+	"sync"
 
 	"github.com/davecgh/go-spew/spew"
 )
@@ -78,6 +79,9 @@ func (s symbolCounter) count(input string) int {
 }
 
 func doAnalysis(data string, counters ...counter) map[string]int {
+	var wg sync.WaitGroup
+	wg.Add(len(counters))
+	var m sync.Mutex
 	// initialize a map to store the counts
 	analysis := make(map[string]int)
 
@@ -86,10 +90,18 @@ func doAnalysis(data string, counters ...counter) map[string]int {
 
 	// loop over the counters and use their name as the key
 	for _, c := range counters {
-		analysis[c.name()] = c.count(data)
+		go func(c counter){
+
+			defer wg.Done()
+			m.Lock()
+			defer m.Unlock()
+			analysis[c.name()] = c.count(data)
+		}(c)
+		
 	}
 
 	// return the map
+	wg.Wait()
 	return analysis
 }
 

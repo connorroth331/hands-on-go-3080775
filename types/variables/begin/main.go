@@ -1,15 +1,18 @@
 // types/variables/begin/main.go
 package main
+import "fmt"
 
 // declare package-level variables of type int
 //
+var d, e ,f int
 
 // declare package-level variables of type bool and override the default values (also known as "zero")
 //
-
+var x, y, z = true, false, true
 func main() {
 	// print ints
 	//
+	fmt.Println("d, e, f:", d, e, f)
 
 	// override the default value of a package-level variable
 	// d = 1_000_000

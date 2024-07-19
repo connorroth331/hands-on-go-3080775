@@ -9,8 +9,20 @@ func cleanup(msg string) {
 
 func main() {
 	// defer function calls
+	defer cleanup("first")
+	defer cleanup("second")
+
+	fmt.Println("MAIN")
+
 
 	// defer recovery
+	defer func(){
+		if err := recover(); err != nil{
+			fmt.Println("REVOCER RECOVER")
+		}
+	}()
 
+	
 	// panic
+	panic("HELP HELP")
 }

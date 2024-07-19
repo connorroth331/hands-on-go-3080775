@@ -1,6 +1,6 @@
 // types/structs/pointers/begin/main.go
 package main
-
+import "fmt"
 type author struct {
 	first string
 	last  string
@@ -12,18 +12,23 @@ func (a author) fullName() string {
 }
 
 // changeName changes the first and last name of the author
-//
+// nned the pointer to acutally change 
+func (a *author) changeName(first, last string){
+	a.first = first
+	a.last = last
+}
 
 func main() {
-	// a := author{
-	// 	first: "Mar1",
-	// 	last:  "Twain",
-	// }
+	a := author{
+		first: "Mar1",
+		last:  "Twain",
+	}
 
-	// fmt.Println(a.fullName())
+	fmt.Println(a.fullName())
 
 	// call changeName to update name of author
 	//
+	a.changeName("john", "smith")
 
-	// fmt.Println(a.fullName())
+	 fmt.Println(a.fullName())
 }

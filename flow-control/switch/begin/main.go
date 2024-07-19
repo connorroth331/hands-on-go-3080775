@@ -17,4 +17,10 @@ func main() {
 	} else {
 		fmt.Printf("%s.\n", os)
 	}
+	
+	switch os := runtime.GOOS; os{
+	case "linux", "darwin", "unix":
+		fmt.Println("*nix variant")
+
+	}
 }

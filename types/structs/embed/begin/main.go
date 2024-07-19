@@ -12,9 +12,16 @@ type person struct {
 func (p person) fullName() string {
 	return p.first + " " + p.last
 }
+func (a author) fullName() string{
+	return a.person.fullName() + " " + a.penName
+}
 
 // define author and embed person
 //
+type author struct {
+	person
+	penName string
+}
 
 // override fullName method for author
 //
@@ -29,4 +36,13 @@ func main() {
 
 	// initialize and print an author's full name
 	//
+	a := author {
+		person: person{
+			first: "hello",
+			last: "world",
+		},
+		penName: "1234",
+	}
+
+	fmt.Println(a.fullName())
 }
